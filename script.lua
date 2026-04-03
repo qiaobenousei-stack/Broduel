@@ -46,7 +46,7 @@ Tab:AddToggle({
                 if char and char:FindFirstChild("Humanoid") then
                     char.Humanoid.WalkSpeed = 53 -- AIM BAT中は強制53
                     local bat = char:FindFirstChildOfClass("Tool")
-                    if bat then bat:Activate() end
+                    if baこt then bat:Activate() end
                 end
                 task.wait(0.1)
             end
