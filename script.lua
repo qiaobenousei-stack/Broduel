@@ -1,51 +1,28 @@
-script.lualocal OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+script.lualocal Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = OrionLib:MakeWindow({Name = "Broduel Hub", HidePremium = true, SaveConfig = true, ConfigFolder = "BrainrotTest"})
-
-local Tab = Window:MakeTab({
-	Name = "Main",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+local Window = Rayfield:CreateWindow({
+   Name = "MY CUSTOM HUB",
+   LoadingTitle = "Script Loading...",
+   LoadingSubtitle = "by Broduel",
+   ConfigurationSaving = { Enabled = false }
 })
 
--- AUTO PLAY (スピード調整)
-Tab:AddToggle({
-	Name = "AUTO PLAY",
-	Default = false,
-	Callback = function(Value)
-		_G.AutoPlay = Value
-		spawn(function()
-			while _G.AutoPlay do
-				local char = game.Players.LocalPlayer.Character
-				if char and char:FindFirstChild("Humanoid") then
-					char.Humanoid.WalkSpeed = 70
-				end
-				task.wait(0.1)
-			end
-		end)
-	end    
+local MainTab = Window:CreateTab("MAIN", 4483345998)
+
+MainTab:CreateToggle({
+   Name = "AIM BOT",
+   CurrentValue = false,
+   Callback = function(Value)
+      print("AIM BOT: " .. tostring(Value))
+   end,
 })
 
--- AIM BAT (自動攻撃 & スピード固定)
-Tab:AddToggle({
-	Name = "AIM BAT",
-	Default = false,
-	Callback = function(Value)
-		_G.AimBat = Value
-		spawn(function()
-			while _G.AimBat do
-				local char = game.Players.LocalPlayer.Character
-				if char and char:FindFirstChild("Humanoid") then
-					char.Humanoid.WalkSpeed = 53
-					local tool = char:FindFirstChildOfClass("Tool")
-					if tool then
-						tool:Activate()
-					end
-				end
-				task.wait(0.1)
-			end
-		end)
-	end    
+MainTab:CreateSlider({
+   Name = "SPEED",
+   Range = {16, 300},
+   Increment = 1,
+   CurrentValue = 16,
+   Callback = function(Value)
+      game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+   end,
 })
-
-OrionLib:Init()
